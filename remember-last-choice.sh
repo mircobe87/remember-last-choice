@@ -2,6 +2,7 @@
 
 CONFIG_FILE=/etc/default/grub
 BACKUP_DIR=/tmp
+BACKUP_FILE="RE.LA.CH.$(date +%s%N)"
 
 # Make sure only root can run our script
 if [ $EUID -ne 0 ]; then
@@ -13,7 +14,7 @@ if [ -f $CONFIG_FILE ]; then
     if [ -w $CONFIG_FILE ]; then
         if [ -w $CONFIG_FILE ]; then
             # make a backup for the GRUB configuration file
-            cp $CONFIG_FILE $BACKUP_DIR/$CONFIG_FILE
+            cp $CONFIG_FILE $BACKUP_DIR/$BACKUP_FILE
 
             # comment already existing configuration entries
             sed -i -r 's/(GRUB_DEFAULT.*)/#\1/g' $CONFIG_FILE
@@ -40,7 +41,7 @@ if [ -f $CONFIG_FILE ]; then
                         break
                         ;;
                     "Restore backup")
-                        cp $BACKUP_DIR/$CONFIG_FILE $CONFIG_FILE
+                        cp $BACKUP_DIR/$BACKUP_FILE $CONFIG_FILE
                         break
                         ;;
                     *)
@@ -48,7 +49,6 @@ if [ -f $CONFIG_FILE ]; then
                         ;;
                 esac
             done
-            rm $BACKUP_DIR/$CONFIG_FILE
         else
             echo "the file '$CONFIG_FILE' has not write permission granted." 1>&2
             exit 3
