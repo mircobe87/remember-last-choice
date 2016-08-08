@@ -1,7 +1,6 @@
 #!/bin/bash
 
-#CONFIG_FILE=/etc/default/grub
-CONFIG_FILE=grub
+CONFIG_FILE=/etc/default/grub
 BACKUP_DIR=/tmp
 
 # Make sure only root can run our script
